@@ -1,0 +1,95 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+  vars:
+    homebrew_packages:
+      - { name: ansible }
+      # - { name: awscli }
+      # - { name: circleci }
+      - { name: direnv }
+      - { name: gettext }
+      - { name: gh }
+      - { name: gibo }
+      - { name: git }
+      - { name: git-flow }
+      - { name: git-lfs }
+      - { name: jq }
+      - { name: mas }
+      - { name: tree }
+      - { name: wget }
+      - { name: yq }
+      - { name: zstd }
+    homebrew_cask_packages:
+      # - { name: alfred }
+      # - { name: android-file-transfer }
+      # - { name: android-studio }
+      # - { name: brackets }
+      # - { name: cyberduck }
+      - { name: dbeaver-community }
+      - { name: docker }
+      # - { name: firefox }
+      - { name: google-chrome }
+      # - { name: google-japanese-ime }
+      # - { name: intellij-idea }
+      - { name: intellij-idea-ce }
+      - { name: iterm2 }
+      - { name: keepassxc }
+      # - { name: mysqlworkbench }
+      - { name: pulsar }
+      # - { name: pycharm-ce }
+      # - { name: sequel-ace }
+      - { name: slack }
+      - { name: sourcetree }
+      - { name: thunderbird }
+      - { name: visual-studio-code }
+      - { name: xmind }
+      - { name: zoom }
+    mac_app_store_apps:
+      - { id: 497799835 } # Xcode
+
+  tasks:
+    # brew update
+    - name: update homebrew
+      community.general.homebrew:
+        update_homebrew: yes
+
+    # brew
+    - name: brew install
+      community.general.homebrew:
+        name: '{{ item.name }}'
+        state: present
+      with_items: '{{ homebrew_packages }}'
+
+    # cask
+    - name: install homebrew cask packages
+      community.general.homebrew_cask:
+        name: '{{ item.name }}'
+        state: present
+        install_options: 'appdir=/Applications'
+      with_items: '{{ homebrew_cask_packages }}'
+
+    # mac app store
+    - name: install mac app store apps
+      community.general.mas:
+        id: '{{ item.id }}'
+        state: present
+      with_items: '{{ mac_app_store_apps }}'
+
+    # pulsar packages
+    - name: pulsar packages install
+      command: ppm install --packages-file pulsar_packages.txt --verbose
+
+    # # dotfiles
+    # - name: Pull dotfiles
+    #   git: repo=git@github.com:foo/dotfiles.git dest=/path.to/tmp/dotfiles
+    #   register: pull_dotfiles_result
+    #
+    # - name: Copy dotfiles
+    #   copy: src=/path.to/tmp/dotfiles/{{ item }} dest=~/{{ item }} force=no
+    #   with_items:
+    #     - '.bashrc'
+    #     - '.vimrc'
+    #     - '.gitconfig'
+    #   when: pull_dotfiles_result | changed

@@ -1,0 +1,13 @@
+atom-beautify
+file-icons
+highlight-selected
+japanese-menu
+minimap
+minimap-bookmarks
+minimap-cursorline
+minimap-find-and-replace
+minimap-git-diff
+minimap-highlight-selected
+minimap-selection
+pretty-json
+show-ideographic-space
