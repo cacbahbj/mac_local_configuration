@@ -37,7 +37,7 @@ ansible-playbook localhost.yml -i hosts -v --check
 
 ## 参考
 
-- Homebrew
+- Homebrew  
 https://brew.sh/ja/
 - Ansible Documentation  
 https://docs.ansible.com/ansible/latest/
