@@ -8,7 +8,7 @@
       - { name: ansible }
       # - { name: awscli }
       # - { name: circleci }
-      - { name: direnv }
+      # - { name: direnv }
       - { name: gettext }
       - { name: gh }
       - { name: gibo }
@@ -16,11 +16,13 @@
       - { name: git-flow }
       - { name: git-lfs }
       - { name: jq }
+      - { name: kubectl }
       - { name: mas }
+      - { name: mise }
       - { name: tree }
       - { name: wget }
       - { name: yq }
-      - { name: zstd }
+      # - { name: zstd }
     homebrew_cask_packages:
       # - { name: alfred }
       # - { name: android-file-transfer }
@@ -30,24 +32,26 @@
       - { name: dbeaver-community }
       - { name: docker }
       # - { name: firefox }
-      - { name: google-chrome }
+      # - { name: google-chrome }
+      - { name: google-cloud-sdk }
       # - { name: google-japanese-ime }
       # - { name: intellij-idea }
-      - { name: intellij-idea-ce }
+      # - { name: intellij-idea-ce }
       - { name: iterm2 }
-      - { name: keepassxc }
+      # - { name: keepassxc }
       # - { name: mysqlworkbench }
-      - { name: pulsar }
+      # - { name: pulsar }
       # - { name: pycharm-ce }
       # - { name: sequel-ace }
-      - { name: slack }
-      - { name: sourcetree }
-      - { name: thunderbird }
+      # - { name: slack }
+      # - { name: sourcetree }
+      - { name: tailscale }
+      # - { name: thunderbird }
       - { name: visual-studio-code }
-      - { name: xmind }
+      # - { name: xmind }
       - { name: zoom }
-    mac_app_store_apps:
-      - { id: 497799835 } # Xcode
+    # mac_app_store_apps:
+      # - { id: 497799835 } # Xcode
 
   tasks:
     # brew update
@@ -70,22 +74,26 @@
         install_options: 'appdir=/Applications'
       with_items: '{{ homebrew_cask_packages }}'
 
-    # mac app store
-    - name: install mac app store apps
-      community.general.mas:
-        id: '{{ item.id }}'
-        state: present
-      with_items: '{{ mac_app_store_apps }}'
+    # # mac app store
+    # - name: install mac app store apps
+    #   community.general.mas:
+    #     id: '{{ item.id }}'
+    #     state: present
+    #   with_items: '{{ mac_app_store_apps }}'
 
-    # pulsar packages
-    - name: pulsar packages install
-      command: ppm install --packages-file pulsar_packages.txt --verbose
+    # mise
+    - name: mise setup
+      command: echo 'eval "$(mise activate zsh)"' >> "${ZDOTDIR-$HOME}/.zshrc"
+
+    # # pulsar packages
+    # - name: pulsar packages install
+    #   command: ppm install --packages-file pulsar_packages.txt --verbose
 
     # # dotfiles
     # - name: Pull dotfiles
     #   git: repo=git@github.com:foo/dotfiles.git dest=/path.to/tmp/dotfiles
     #   register: pull_dotfiles_result
-    #
+
     # - name: Copy dotfiles
     #   copy: src=/path.to/tmp/dotfiles/{{ item }} dest=~/{{ item }} force=no
     #   with_items:
