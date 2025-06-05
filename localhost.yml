@@ -6,7 +6,7 @@
   vars:
     homebrew_packages:
       - { name: ansible }
-      # - { name: awscli }
+      - { name: awscli }
       # - { name: circleci }
       # - { name: direnv }
       - { name: gettext }
@@ -16,7 +16,7 @@
       - { name: git-flow }
       - { name: git-lfs }
       - { name: jq }
-      - { name: kubectl }
+      # - { name: kubectl }
       - { name: mas }
       - { name: mise }
       - { name: tree }
@@ -24,18 +24,20 @@
       - { name: yq }
       # - { name: zstd }
     homebrew_cask_packages:
+      - { name: 1password }
+      - { name: 1password-cli }
       # - { name: alfred }
       # - { name: android-file-transfer }
       # - { name: android-studio }
       # - { name: brackets }
       # - { name: cyberduck }
-      - { name: dbeaver-community }
+      # - { name: dbeaver-community }
       - { name: docker }
       # - { name: firefox }
       # - { name: google-chrome }
-      - { name: google-cloud-sdk }
+      # - { name: google-cloud-sdk }
       # - { name: google-japanese-ime }
-      # - { name: intellij-idea }
+      - { name: intellij-idea }
       # - { name: intellij-idea-ce }
       - { name: iterm2 }
       # - { name: keepassxc }
@@ -45,10 +47,11 @@
       # - { name: sequel-ace }
       # - { name: slack }
       # - { name: sourcetree }
-      - { name: tailscale }
+      # - { name: tailscale }
       # - { name: thunderbird }
       - { name: visual-studio-code }
       # - { name: xmind }
+      - { name: zed }
       - { name: zoom }
     # mac_app_store_apps:
       # - { id: 497799835 } # Xcode
@@ -82,8 +85,10 @@
     #   with_items: '{{ mac_app_store_apps }}'
 
     # mise
-    - name: mise setup
-      command: echo 'eval "$(mise activate zsh)"' >> "${ZDOTDIR-$HOME}/.zshrc"
+    # - name: non-interactive sessions
+    #   command: echo 'eval "$(mise activate zsh --shims)"' >> "${ZDOTDIR-$HOME}/.zprofile"
+    # - name: interactive sessions
+    #   command: echo 'eval "$(mise activate zsh)"' >> "${ZDOTDIR-$HOME}/.zshrc"
 
     # # pulsar packages
     # - name: pulsar packages install
