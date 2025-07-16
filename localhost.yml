@@ -35,7 +35,7 @@
       - { name: docker }
       # - { name: firefox }
       # - { name: google-chrome }
-      # - { name: google-cloud-sdk }
+      - { name: google-cloud-sdk }
       # - { name: google-japanese-ime }
       - { name: intellij-idea }
       # - { name: intellij-idea-ce }
@@ -54,7 +54,7 @@
       - { name: zed }
       - { name: zoom }
     # mac_app_store_apps:
-      # - { id: 497799835 } # Xcode
+    # - { id: 497799835 } # Xcode
 
   tasks:
     # brew update
@@ -65,17 +65,17 @@
     # brew
     - name: brew install
       community.general.homebrew:
-        name: '{{ item.name }}'
+        name: "{{ item.name }}"
         state: present
-      with_items: '{{ homebrew_packages }}'
+      with_items: "{{ homebrew_packages }}"
 
     # cask
     - name: install homebrew cask packages
       community.general.homebrew_cask:
-        name: '{{ item.name }}'
+        name: "{{ item.name }}"
         state: present
-        install_options: 'appdir=/Applications'
-      with_items: '{{ homebrew_cask_packages }}'
+        install_options: "appdir=/Applications"
+      with_items: "{{ homebrew_cask_packages }}"
 
     # # mac app store
     # - name: install mac app store apps
